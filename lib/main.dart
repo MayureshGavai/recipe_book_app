@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './screens/meal_detail.dart';
+import '../screens/meal_detail.dart';
+import '../screens/tabs_screen.dart';
 import './screens/category_meals.dart';
 import './screens/categories.dart';
 
@@ -15,13 +16,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'recipe_app',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData(canvasColor: Color.fromRGBO(255, 254, 229, 1),
+        fontFamily: 'Montserrat',
+        textTheme: ThemeData.light().textTheme.copyWith(
+            bodyLarge: TextStyle(
+              color: Color.fromRGBO(20, 51, 51, 1),
+            ),
+            bodyMedium: TextStyle(
+              color: Color.fromRGBO(20, 51, 51, 1),
+            ),
+            titleLarge: TextStyle(
+              fontSize: 20,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.bold,
+            )), colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink).copyWith(secondary: Colors.amber),
       ),
       // home: HomePage(),
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
+        '/': (context) => TabsScreen(),
         CategoryMeal.routeName: (context) => CategoryMeal(),
         MealDetail.routeName : (context) => MealDetail(),
       },
