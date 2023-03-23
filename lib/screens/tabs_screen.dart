@@ -51,6 +51,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import '../widgets/main_drawer.dart';
 
 import './favourites.dart';
 import './categories.dart';
@@ -85,12 +86,15 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(_pages[_selectedPageIndex]['title']),
       ),
+      drawer: Drawer(
+        child: MainDrawer(),
+      ),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.pink,
         unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).accentColor,
+        selectedItemColor: Colors.amber,
         currentIndex: _selectedPageIndex,
         // type: BottomNavigationBarType.fixed,
         items: [
