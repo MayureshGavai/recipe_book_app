@@ -4,13 +4,41 @@ import '../screens/meal_detail.dart';
 import '../screens/tabs_screen.dart';
 import './screens/category_meals.dart';
 import './screens/categories.dart';
+import '../models/meal.dart';
+import '../dummy_data.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  List<Meal> _availableMeals = Dummy_Meals;
+  List<Meal> _favoriteMeals = [];
+
+  void _toggleFavorite(String mealId) {
+    final existingIndex =
+        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteMeals.add(
+          Dummy_Meals.firstWhere((meal) => meal.id == mealId),
+        );
+      });
+    }
+  }
+
+  bool _isMealFavorite(String id) {
+    return _favoriteMeals.any((meal) => meal.id == id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +66,9 @@ class MyApp extends StatelessWidget {
       // home: HomePage(),
       initialRoute: '/',
       routes: {
-        '/': (context) => TabsScreen(),
+        '/': (context) => TabsScreen(_favoriteMeals),
         CategoryMeal.routeName: (context) => CategoryMeal(),
-        MealDetail.routeName: (context) => MealDetail(),
+        MealDetail.routeName: (context) => MealDetail(_toggleFavorite, _isMealFavorite),
         FilterScreen.routeName: (context) => FilterScreen(),
       },
     );
